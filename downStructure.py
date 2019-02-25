@@ -7,7 +7,7 @@ helpmsg ='''------------
 
 def onServerInfo(server, info):
   if info.isPlayer == 1:
-    if info.content.startswith('!!pget'):
+    if info.content.startswith('!!getStructure'):
       if (len(args) == 1):
         for i in os.listdir('../'):
           server.say(i)
