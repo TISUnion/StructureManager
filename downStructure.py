@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import re
+import traceback
 
 helpmsg ='''------------
 !!getStructure <URL> -下载结构文件到本地
@@ -13,5 +14,10 @@ def onServerInfo(server, info):
         for line in helpmsg.splitlines():
           server.tell(info.player, line)
       elif info.content.startswith == '!!getStructure dir ':
-        for i in info.content.split(' ')[2]:
-          server.tell(info.player, i)
+        try:
+          for i in os.listdir(info.content.split(' ')[2]):
+            server.tell(info.player, i)
+        except:
+          lines = traceback.format_exc().splitlines()
+          for l in lines:
+            server.say(l)
