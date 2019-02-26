@@ -10,8 +10,8 @@ helpmsg ='''------------
 文件夹和文件名只兼容英文大小写字母、数字和下划线
 使用 -o 在重名时覆盖
 使用 -b64 打开base64模式，将会作为base64编码的文件被下载和解码
-!!structget -l (<foldername>) -列出服务器的结构文件
-指定文件夹名进一步定位
+!!structget -l (<key>) -列出服务器的结构文件
+指定关键字进一步定位
 ------------'''
 
 def onServerInfo(server, info):
@@ -50,14 +50,9 @@ def getStruct(server, foldername, filename, url, can_overwrite):
 def getStructB64(server, foldername, filename, url, can_overwrite):
     pass
 
-def listStruct(server, player, foldername=''):
-    g = os.walk('server/world/generated/' + foldername)
-    if foldername == '':
-        for i in next(g)[1]:
-            next(g)
-            for j in next(g)[2]:
-                server.tell(player, i + ':' + j.replace('.nbt',''))
-    else:
-        next(g)
-        for i in next(g)[2]:
-            server.tell(player, foldername + ':' + i.replace('.nbt',''))
+def listStruct(server, player, kwd=''):
+    for i in os.listdir('server/world/generated/'):
+        for j in os.listdir('server/world/generated/'+i+'/structures'):
+            strout = i+':'+j
+            if strout.find('') > -1:
+                server.tell(player, strout)
