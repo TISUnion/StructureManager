@@ -15,6 +15,7 @@ helpmsg ='''------------
 ------------'''
 
 def onServerInfo(server, info):
+  try:
     if info.isPlayer == 1:
         if info.content.startswith('!!structget'):
             if info.content == '!!structget':
@@ -33,6 +34,10 @@ def onServerInfo(server, info):
                     getStruct(args[1], args[2], args[3], can_overwrite)
                 else
                     getStructB64(args[1], args[2], args[3], can_overwrite)
+  except:
+    lines = traceback.format_exc().splitlines()
+    for l in lines:
+        server.say(l)
                      
 def getStruct(server, foldername, filename, url, can_overwrite):
 #     result = os.system('cd server\world\generated\ && wget -N ' + args[1])
@@ -49,7 +54,7 @@ def listStruct(server, player):
     g = os.walk('\server\world\generated')
     for i in next(g)[1]:
         for j in next(g)[2]:
-             i + ':' + j.replace('.nbt','')
+            server.tell(player, i + ':' + j.replace('.nbt',''))
 
 def listStruct(server, player, foldername):
     pass
