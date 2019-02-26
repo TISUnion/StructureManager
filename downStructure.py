@@ -43,7 +43,7 @@ def onServerInfo(server, info):
     for l in lines:
         server.say(l)
     
-def getStruct(server, foldername, filename, url,is_b64mode , can_overwrite):
+def getStruct(server, foldername, filename, url, is_b64mode, can_overwrite, do_reload=True):
     if not can_overwrite:
         if os.path.exists('server/world/generated/'+foldername+'/structures/'+filename+'.nbt'):
             server.say('§a'+foldername+':'+filename+'§r§c exists, use §r§7-o§r§c to overwrite§r')
@@ -63,7 +63,8 @@ def getStruct(server, foldername, filename, url,is_b64mode , can_overwrite):
                 nbtfile.write(data)
                 server.say('§a'+foldername+':'+filename+'§r has been downloaded successfully')
 
-        server.execute('reload')
+        if do_reload:
+            server.execute('reload')
     except:
         lines = traceback.format_exc().splitlines()
         for l in lines:
@@ -82,19 +83,20 @@ def listStruct(server, player, kwrd=''):
                 if counter > 20:
                     return
 
-def delStruct(server, player, foldername, filename):
+def delStruct(server, player, foldername, filename, reload=True):
     try:
         if filename == '*':
             for i in os.listdir('server/world/generated/'+foldername+'/structures/'):
-                delStruct(server, player, foldername, i[0:len(i)-4])
+                delStruct(server, player, foldername, i[0:len(i)-4], reload=False)
             os.rmdir('server/world/generated/'+foldername+'/structures')
             os.rmdir('server/world/generated/'+foldername)
         else:
             os.remove('server/world/generated/'+foldername+'/structures/'+filename+'.nbt')
-            
+
         server.say(player+' has deleted §c'+foldername+':'+filename+'§r')
 
-        server.execute('reload')
+        if do_reload:
+            server.execute('reload')
     except:
         lines = traceback.format_exc().splitlines()
         for l in lines:
