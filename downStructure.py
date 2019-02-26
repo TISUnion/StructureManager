@@ -48,6 +48,7 @@ def getStruct(server, foldername, filename, url,is_b64mode , can_overwrite):
         if os.path.exists('server/world/generated/'+foldername+'/structures/'+filename+'.nbt'):
             server.say('§a'+foldername+':'+filename+'§r§c exists, use §r§7-o§r§c to overwrite§r')
             return
+    server.say('trying downloading as §a'+foldername+':'+filename+'§r...')
     try:
         os.makedirs('server/world/generated/'+foldername+'/structures')
     except:
@@ -66,6 +67,7 @@ def getStruct(server, foldername, filename, url,is_b64mode , can_overwrite):
         for l in lines:
             server.say(l)
         server.say('§cfailed to download§r')
+    server.run('reload')
 
 def listStruct(server, player, kwrd=''):
     counter = 0
@@ -94,3 +96,4 @@ def delStruct(server, player, foldername, filename):
         for l in lines:
             server.say(l)
         server.tell(player, '§cfailed to delete§r§7 '+foldername+':'+filename+'§r')
+    server.run('reload')
