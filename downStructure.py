@@ -83,7 +83,7 @@ def delStruct(server, player, foldername, filename):
     try:
         if filename == '*':
             for i in os.listdir('server/world/generated/'+foldername+'/structures/'):
-                delStruct(server, player, foldername, i)
+                delStruct(server, player, foldername, i[0:len(i)-4])
             os.rmdir('server/world/generated/'+foldername+'/structures')
             os.rmdir('server/world/generated/'+foldername)
         else:
