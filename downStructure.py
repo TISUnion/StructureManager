@@ -52,7 +52,7 @@ def getStructB64(server, foldername, filename, url, can_overwrite):
 
 def listStruct(server, player, foldername=''):
     server.tell(player, 'server/world/generated/' + foldername)
-    for i in os.listdir('server'):
+    for i in os.listdir('server/world'):
         server.tell(player, i)
     g = os.walk('server/world/generated/' + foldername)
     for i in next(g)[1]:
