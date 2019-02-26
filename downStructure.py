@@ -62,12 +62,13 @@ def getStruct(server, foldername, filename, url,is_b64mode , can_overwrite):
             else:
                 nbtfile.write(data)
                 server.say('§a'+foldername+':'+filename+'§r has been downloaded successfully')
+
+        server.execute('reload')
     except:
         lines = traceback.format_exc().splitlines()
         for l in lines:
             server.say(l)
         server.say('§cfailed to download§r')
-    server.execute('reload')
 
 def listStruct(server, player, kwrd=''):
     counter = 0
@@ -90,10 +91,12 @@ def delStruct(server, player, foldername, filename):
             os.rmdir('server/world/generated/'+foldername)
         else:
             os.remove('server/world/generated/'+foldername+'/structures/'+filename+'.nbt')
+            
         server.say(player+' has deleted §c'+foldername+':'+filename+'§r')
+
+        server.execute('reload')
     except:
         lines = traceback.format_exc().splitlines()
         for l in lines:
             server.say(l)
         server.tell(player, '§cfailed to delete§r§7 '+foldername+':'+filename+'§r')
-    server.execute('reload')
