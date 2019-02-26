@@ -88,7 +88,7 @@ def delStruct(server, player, foldername, filename):
             os.rmdir('server/world/generated/'+foldername)
         else:
             os.remove('server/world/generated/'+foldername+'/structures/'+filename+'.nbt')
-        server.say(player+'has deleted §c'+foldername+':'+filename+'§r')
+        server.say(player+' has deleted §c'+foldername+':'+filename+'§r')
     except:
         lines = traceback.format_exc().splitlines()
         for l in lines:
