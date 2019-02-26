@@ -50,9 +50,9 @@ def getStruct(server, foldername, filename, url, can_overwrite):
 def getStructB64(server, foldername, filename, url, can_overwrite):
     pass
 
-def listStruct(server, player, kwd=''):
+def listStruct(server, player, kwrd=''):
     for i in os.listdir('server/world/generated/'):
         for j in os.listdir('server/world/generated/'+i+'/structures'):
             strout = i+':'+j
-            if strout.find('') > -1:
+            if strout.find(kwrd) > -1:
                 server.tell(player, strout)
