@@ -50,11 +50,8 @@ def getStruct(server, foldername, filename, url, can_overwrite):
 def getStructB64(server, foldername, filename, url, can_overwrite):
     pass
 
-def listStruct(server, player):
-    g = os.walk('\server\world\generated')
+def listStruct(server, player, foldername=''):
+    g = os.walk('server\\world\\generated\\' + foldername)
     for i in next(g)[1]:
         for j in next(g)[2]:
             server.tell(player, i + ':' + j.replace('.nbt',''))
-
-def listStruct(server, player, foldername):
-    pass
