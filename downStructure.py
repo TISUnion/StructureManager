@@ -83,11 +83,11 @@ def listStruct(server, player, kwrd=''):
                 if counter > 20:
                     return
 
-def delStruct(server, player, foldername, filename, reload=True):
+def delStruct(server, player, foldername, filename, do_reload=True):
     try:
         if filename == '*':
             for i in os.listdir('server/world/generated/'+foldername+'/structures/'):
-                delStruct(server, player, foldername, i[0:len(i)-4], reload=False)
+                delStruct(server, player, foldername, i[0:len(i)-4], do_reload=False)
             os.rmdir('server/world/generated/'+foldername+'/structures')
             os.rmdir('server/world/generated/'+foldername)
         else:
