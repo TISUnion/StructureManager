@@ -24,13 +24,13 @@ def onServerInfo(server, info):
             if info.content == '!!structget':
                 for line in helpmsg.splitlines():
                     server.tell(info.player, line)
-            elif re.match('^!!structget -l( \w+)?$', info.content):
+            elif re.match('^!!structget -l( [\w-]+)?$', info.content):
                 args = info.content.split(' ')
                 if len(args) == 3:
                     listStruct(server, info.player, args[2])
                 else:
                     listStruct(server, info.player)
-            elif re.match('^!!structget -d \w+ [\w\*]+$', info.content):
+            elif re.match('^!!structget -d [\w-]+ [\w\*-]+$', info.content):
                 args = info.content.split(' ')
                 delStruct(server, info.player, args[2], args[3])
             elif re.match('^!!structget [a-z-_0-9]+ [a-z-_0-9]+ \S+( -o)?( -b64)?( -o)?$', info.content):
