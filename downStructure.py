@@ -30,7 +30,7 @@ def onServerInfo(server, info):
                     listStruct(server, info.player, args[2])
                 else:
                     listStruct(server, info.player)
-            elif re.match('^!!structget -d \w+ [\w\*]+$'):
+            elif re.match('^!!structget -d \w+ [\w\*]+$', info.content):
                 args = info.content.split(' ')
                 delStruct(server, info.player, args[2], args[3])
             elif re.match('^!!structget [a-z-_0-9]+ [a-z-_0-9]+ \S+( -o)?( -b64)?( -o)?$', info.content):
