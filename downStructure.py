@@ -21,7 +21,7 @@ def onServerInfo(server, info):
             if info.content == '!!structget':
                 for line in helpmsg.splitlines():
                     server.tell(info.player, line)
-            elif re.match('^!!structget -l( \w+)?$', info.content):
+            elif re.match('^!!structget -l( \S+)?$', info.content):
                 args = info.content.split(' ')
                 if len(args) == 3:
                     listStruct(server, info.player, args[2])
