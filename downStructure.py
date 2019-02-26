@@ -67,7 +67,7 @@ def getStruct(server, foldername, filename, url,is_b64mode , can_overwrite):
         for l in lines:
             server.say(l)
         server.say('§cfailed to download§r')
-    server.run('reload')
+    server.execute('reload')
 
 def listStruct(server, player, kwrd=''):
     counter = 0
@@ -96,4 +96,4 @@ def delStruct(server, player, foldername, filename):
         for l in lines:
             server.say(l)
         server.tell(player, '§cfailed to delete§r§7 '+foldername+':'+filename+'§r')
-    server.run('reload')
+    server.execute('reload')
