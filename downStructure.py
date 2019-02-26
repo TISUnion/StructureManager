@@ -41,12 +41,12 @@ def onServerInfo(server, info):
                      
 def getStruct(server, foldername, filename, url, can_overwrite):
     try:
-        os.mkdir('server/world/generated/'+foldername+'/structures')
+        os.makedirs('server/world/generated/'+foldername+'/structures')
     except:
         pass
     result = os.system('cd server/world/generated/'+foldername+'/structures && wget -O '+filename+'.nbt -N '+url)
     if result == 0:
-        server.say('§a'foldername+':'+filename+'&r has been downloaded successfully')
+        server.say('§a'+foldername+':'+filename+'&r has been downloaded successfully')
     else:
         server.say('failed to download')
     
