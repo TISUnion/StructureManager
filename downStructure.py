@@ -5,13 +5,13 @@ import urllib2
 import traceback
 
 helpmsg ='''------------
-!!structget <folder> <name> <url> (-o) (-b64) -下载结构文件到本地的文件夹中
+§7!!structget <folder> <name> <url> (-o) (-b64)§r -下载结构文件到本地的文件夹中
 请指定文件夹，以免覆盖同名结构文件
-文件夹和文件名只兼容英文大小写字母、数字和下划线
-使用 -o 在重名时覆盖
-使用 -b64 打开base64模式，将会作为base64编码的文件被下载和解码
-!!structget -l (<key>) -列出服务器的结构文件，最多一次20个
-指定关键字进一步定位
+文件夹和文件名只兼容英文小写字母、数字、短划线和下划线
+使用 §7-o§r 在重名时覆盖
+使用 §7-b64§r 打开base64模式，将会作为base64编码的文件被下载和解码
+§7!!structget -l (<key>)§r -列出服务器的结构文件，最多一次20个
+指定关键字 §7<key>§r 进一步定位
 ------------'''
 
 def onServerInfo(server, info):
@@ -27,7 +27,7 @@ def onServerInfo(server, info):
                     listStruct(server, info.player, args[2])
                 else:
                     listStruct(server, info.player)
-            elif re.match('^!!structget \w+ \w+ \S+( -o)?( -b64)?( -o)?$', info.content):
+            elif re.match('^!!structget [a-z-_0-9]+ [a-z-_0-9]+ \S+( -o)?( -b64)?( -o)?$', info.content):
                 args = info.content.split(' ')
                 can_overwrite = info.content.find(' -o') > -1
                 if info.content.find(' -b64') > -1:
@@ -40,18 +40,22 @@ def onServerInfo(server, info):
         server.say(l)
                      
 def getStruct(server, foldername, filename, url, can_overwrite):
+    if not can_overwrite:
+        if os.path.exists('server/world/generated/'+foldername+'/structures/'+filename+'.nbt'):
+            server.say('§a'+foldername+':'+filename+'§r§c exists, use §r§7-o§r§c to overwrite§r')
+            return
     try:
         os.makedirs('server/world/generated/'+foldername+'/structures')
     except:
         pass
-    result = os.system('cd server/world/generated/'+foldername+'/structures && wget'+('' if can_overwrite else ' -nc')+' -O '+filename+'.nbt -N '+url)
+    result = os.system('cd server/world/generated/'+foldername+'/structures && wget -O '+filename+'.nbt -N '+url)
     if result == 0:
         server.say('§a'+foldername+':'+filename+'§r has been downloaded successfully')
     else:
-        server.say('§cfailed to download§r')
+        server.say('§cfailed to download§r, result='+str(result))
     
 def getStructB64(server, foldername, filename, url, can_overwrite):
-    pass
+    b64data = urllib2.urlopen('https://pastebin.com/raw/PxuhMiWK').read()
 
 def listStruct(server, player, kwrd=''):
     counter = 0
