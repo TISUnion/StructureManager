@@ -21,7 +21,7 @@ def onServerInfo(server, info):
             if info.content == '!!structget':
                 for line in helpmsg.splitlines():
                     server.tell(info.player, line)
-            elif re.match('^!!structget -l( \S+)?$', info.content):
+            elif re.match('^!!structget -l( \w+)?$', info.content):
                 args = info.content.split(' ')
                 if len(args) == 3:
                     listStruct(server, info.player, args[2])
@@ -51,10 +51,13 @@ def getStructB64(server, foldername, filename, url, can_overwrite):
     pass
 
 def listStruct(server, player, foldername=''):
-    server.tell(player, 'server/world/generated/' + foldername)
-    for i in os.listdir(foldername):
-        server.tell(player, i)
     g = os.walk('server/world/generated/' + foldername)
-    for i in next(g)[1]:
-        for j in next(g)[2]:
-            server.tell(player, i + ':' + j.replace('.nbt',''))
+    if foldername == '':
+        for i in next(g)[1]:
+            next(g)
+            for j in next(g)[2]:
+                server.tell(player, i + ':' + j.replace('.nbt',''))
+    else:
+        next(g)
+        for i in next(g)[2]:
+            server.tell(player, foldername + ':' + i.replace('.nbt',''))
