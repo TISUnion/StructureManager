@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import re
+import urllib2
 import traceback
 
 helpmsg ='''------------
@@ -20,40 +21,40 @@ def onServerInfo(server, info):
             if info.content == '!!structget':
                 for line in helpmsg.splitlines():
                     server.tell(info.player, line)
-            elif re.match('^!!structget -l( \w+)?$', info.content):
-                args = info.content.split(' ')
-                if len(args) == 3:
-                    listStruct(server, info.player, args[2])
-                else:
-                    listStruct(server, info.player)
-            elif re.match('^!!structget \w+ \w+ \S+( -o)?( -b64)?( -o)?$', info.content)
-                args = info.content.split(' ')
-                can_overwrite = info.content.find(' -o') > -1
-                if info.content.find(' -b64') > -1:
-                    getStruct(args[1], args[2], args[3], can_overwrite)
-                else
-                    getStructB64(args[1], args[2], args[3], can_overwrite)
-  except:
-    lines = traceback.format_exc().splitlines()
-    for l in lines:
-        server.say(l)
+#             elif re.match('^!!structget -l( \w+)?$', info.content):
+#                 args = info.content.split(' ')
+#                 if len(args) == 3:
+#                     listStruct(server, info.player, args[2])
+#                 else:
+#                     listStruct(server, info.player)
+#             elif re.match('^!!structget \w+ \w+ \S+( -o)?( -b64)?( -o)?$', info.content)
+#                 args = info.content.split(' ')
+#                 can_overwrite = info.content.find(' -o') > -1
+#                 if info.content.find(' -b64') > -1:
+#                     getStruct(args[1], args[2], args[3], can_overwrite)
+#                 else
+#                     getStructB64(args[1], args[2], args[3], can_overwrite)
+#   except:
+#     lines = traceback.format_exc().splitlines()
+#     for l in lines:
+#         server.say(l)
                      
-def getStruct(server, foldername, filename, url, can_overwrite):
-#     result = os.system('cd server\world\generated\ && wget -N ' + args[1])
-#         if result == 0:
-#           server.say('success')
-#         else:
-#           server.say('failed to download')
-    pass
+# def getStruct(server, foldername, filename, url, can_overwrite):
+# #     result = os.system('cd server\world\generated\ && wget -N ' + args[1])
+# #         if result == 0:
+# #           server.say('success')
+# #         else:
+# #           server.say('failed to download')
+#     pass
     
-def getStructB64(server, foldername, filename, url, can_overwrite):
-    pass
+# def getStructB64(server, foldername, filename, url, can_overwrite):
+#     pass
 
-def listStruct(server, player):
-    g = os.walk('\server\world\generated')
-    for i in next(g)[1]:
-        for j in next(g)[2]:
-            server.tell(player, i + ':' + j.replace('.nbt',''))
+# def listStruct(server, player):
+#     g = os.walk('\server\world\generated')
+#     for i in next(g)[1]:
+#         for j in next(g)[2]:
+#             server.tell(player, i + ':' + j.replace('.nbt',''))
 
-def listStruct(server, player, foldername):
-    pass
+# def listStruct(server, player, foldername):
+#     pass
