@@ -52,7 +52,7 @@ def onServerInfo(server, info):
                 args = info.content.split(' ')
                 can_overwrite = info.content.find(' -o') > -1
                 is_b64mode = info.content.find(' -b64') > -1
-                getStruct(server, args[1], args[2], args[3], is_b64mode, can_overwrite)
+                getStruct(server, args[2], args[3], args[4], is_b64mode, can_overwrite)
   except:
     lines = traceback.format_exc().splitlines()
     for l in lines:
