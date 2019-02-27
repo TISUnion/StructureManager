@@ -1,5 +1,7 @@
 # DownStructure
 download a structure to server and manage structures
+
+[中文文档](./README_CN.md)
 ### This program follows [GPL-3.0 License](https://github.com/TISUnion/DownStructure/blob/master/LICENSE)
 ---
 ## Guide
