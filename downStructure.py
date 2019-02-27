@@ -42,12 +42,12 @@ def onServerInfo(server, info):
                 args = info.content.split(' ')
                 delStruct(server, info.player, args[2], args[3])
             elif re.match('^!!struct paste [0-9a-z-_]+ [0-9a-z-_]+( -d:((N)|(10M)|(1H)|(1D)|(1W)|(2W)|(1M)|(6M)|(1Y)))?$', info.content):
-            	args = info.content.split(' ')
-            	if len(args) == 4:
-            		args.append(['-d','N'])
-            	else:
-            		args[4] = args[4].split(':')
-            	pasteStruct(server, player, args[2], args[3], args[4][1])
+                args = info.content.split(' ')
+                if len(args) == 4:
+                    args.append(['-d','N'])
+                else:
+                    args[4] = args[4].split(':')
+                pasteStruct(server, player, args[2], args[3], args[4][1])
             elif re.match('^!!struct get [a-z-_0-9]+ [a-z-_0-9]+ \S+( -o)?( -b64)?( -o)?$', info.content):
                 args = info.content.split(' ')
                 can_overwrite = info.content.find(' -o') > -1
@@ -100,17 +100,17 @@ def listStruct(server, player, page, kwrd=''):
                 if counter > end:
                     return
     if counter == 1:
-    	server.tell(player, '§cNo item to list!§r')
+        server.tell(player, '§cNo item to list!§r')
 
 def delStruct(server, player, foldername, filename, do_reload=True):
-	if filename == '*':
-		if not os.path.exists('server/world/generated/'+foldername):
-			server.tell(player, '§cfolder §r§7'+foldername+'§r§c does not exist§r')
-			return
-	else:
-		if not os.path.exists('server/world/generated/'+foldername+'/structures/'+filename+'.nbt'):
-			server.tell(player, '§cstructure §r§7'+foldername+':'+filename+'§r§c does not exist§r')
-			return
+    if filename == '*':
+        if not os.path.exists('server/world/generated/'+foldername):
+            server.tell(player, '§cfolder §r§7'+foldername+'§r§c does not exist§r')
+            return
+    else:
+        if not os.path.exists('server/world/generated/'+foldername+'/structures/'+filename+'.nbt'):
+            server.tell(player, '§cstructure §r§7'+foldername+':'+filename+'§r§c does not exist§r')
+            return
     try:
         if filename == '*':
             for i in os.listdir('server/world/generated/'+foldername+'/structures/'):
@@ -131,28 +131,28 @@ def delStruct(server, player, foldername, filename, do_reload=True):
         server.tell(player, '§cfailed to delete§r§7 '+foldername+':'+filename+'§r')
 
 def pasteStruct(server, player, foldername, filename, expire_date='N'):
-	filepath = 'server/world/generated/'+foldername+'/structures/'+filename+'.nbt' #检验文件
-	if not os.path.exists(filepath):
-			server.tell(player, '§cstructure §r§7'+foldername+':'+filename+'§r§c does not exist§r')
-			return
-	with open(filepath,'rb') as nbtfile: #转码
-    	b64data = base64.b64encode(nbtfile.read())
-	paste_param = urllib.urlencode({'api_option': 'paste', #丢给 pastebin
-		'api_dev_key': "04941ffafb9e4a8ab6e9da99fc162e54", #如果这个key不能用了，你得自己注册个pastebin账号搞个新的
-		'api_option': 'paste',
-		'api_paste_code': b64data,
-		'api_paste_expire_date': expire_date
-		})
-	try:
-		response = urllib.urlopen('https://pastebin.com' + '/api/api_post.php',paste_param) #返回网址
-		response_url = response.read()
-	except:
-		lines = traceback.format_exc().splitlines()
+    filepath = 'server/world/generated/'+foldername+'/structures/'+filename+'.nbt' #检验文件
+    if not os.path.exists(filepath):
+            server.tell(player, '§cstructure §r§7'+foldername+':'+filename+'§r§c does not exist§r')
+            return
+    with open(filepath,'rb') as nbtfile: #转码
+        b64data = base64.b64encode(nbtfile.read())
+    paste_param = urllib.urlencode({'api_option': 'paste', #丢给 pastebin
+        'api_dev_key': "04941ffafb9e4a8ab6e9da99fc162e54", #如果这个key不能用了，你得自己注册个pastebin账号搞个新的
+        'api_option': 'paste',
+        'api_paste_code': b64data,
+        'api_paste_expire_date': expire_date
+        })
+    try:
+        response = urllib.urlopen('https://pastebin.com' + '/api/api_post.php',paste_param) #返回网址
+        response_url = response.read()
+    except:
+        lines = traceback.format_exc().splitlines()
         for l in lines:
             server.say(l)
         server.tell(player, '§cfailed to upload to pastebin§r§7 '+foldername+':'+filename+'§r')
-	finally:
-		response.close()
-	response_url = response_url.split('/')
-	response_url = 'https://pastebin.com/raw/'+response_url[len(response_url)-1]
-	server.execute('tellraw @a ['+'{"text": "§a'+foldername+':'+filename+'§r is uploaded to §7'+response_url+'§r for §a'+expire_date+'§r\\nclick "}, '+'{"text": "§nhere§r", "click_event": {"action": "suggest_command", "value": "'+response_url+'"}}, '+'{"text": " and copy to use otherwhere"}]')
+    finally:
+        response.close()
+    response_url = response_url.split('/')
+    response_url = 'https://pastebin.com/raw/'+response_url[len(response_url)-1]
+    server.execute('tellraw @a ['+'{"text": "§a'+foldername+':'+filename+'§r is uploaded to §7'+response_url+'§r for §a'+expire_date+'§r\\nclick "}, '+'{"text": "§nhere§r", "click_event": {"action": "suggest_command", "value": "'+response_url+'"}}, '+'{"text": " and copy to use otherwhere"}]')
