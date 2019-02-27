@@ -22,3 +22,6 @@ download a structure to server and manage structures
 - Base64 format is used, don't forget to use `-b64` when download
 - Use `<-d>` to set expire date; default to `N` 
 - Times available are: never, 10 minutes, 1 hour, 1 day, 1 week, 2 weeks, 1 month, 6 months and 1 year
+
+---
+Use `nbt_or_b64.py` or `nbt_or_b64.nbt` to convert .nbt file to base64 .txt file. Just drag-and-drop your .nbt or .txt file onto it;P
