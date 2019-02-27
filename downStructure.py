@@ -155,4 +155,4 @@ def pasteStruct(server, player, foldername, filename, expire_date='N'):
         response.close()
     response_url = response_url.split('/')
     response_url = 'https://pastebin.com/raw/'+response_url[len(response_url)-1]
-    server.execute('tellraw @a ['+'{"text": "§a'+foldername+':'+filename+'§r is uploaded to §7'+response_url+'§r for §a'+expire_date+'§r\\nclick "}, '+'{"text": "§nhere§r", "click_event": {"action": "suggest_command", "value": "'+response_url+'"}}, '+'{"text": " and copy to use otherwhere"}]')
+    server.execute('tellraw @a ['+'{"text": "§a'+foldername+':'+filename+'§r is uploaded to §7'+response_url+'§r for §a'+expire_date+'§r\\nclick "}, '+'{"text": "§nhere§r", "clickEvent": {"action": "suggest_command", "value": "'+response_url+'"}}, '+'{"text": " and copy to use otherwhere"}]')
