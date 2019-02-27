@@ -1,6 +1,8 @@
 # DownStructure
 download a structure to server and manage structures
-
+### This program follows [GPL-3.0 License](https://github.com/TISUnion/DownStructure/blob/master/LICENSE)
+---
+## Guide
 `!!structget <folder> <name> <url> (-o) (-b64)` - download structure file to server
 - Must specify the folder, and it looks like `<folder>:<name>` in minecraft. 
 - Only lowercase english letters, numbers and underscores are allowed in folder and file names.
