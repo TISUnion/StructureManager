@@ -12,15 +12,18 @@ helpmsg ='''------------
 文件夹和文件名只兼容英文小写字母、数字、短划线和下划线
 使用 §7-o§r 在重名时覆盖
 使用 §7-b64§r 打开base64模式，将会作为base64编码的文件被下载和解码
+
 §7!!struct list(:<page>) (<key>)§r -列出服务器的结构文件，最多一页20个
 指定关键字 §7<key>§r 进一步定位
-使用如 §7-l:2§r 的格式来翻页
+使用如 §7-list:2§r 的格式来翻页
+
 §7!!struct del <folder> <name> -删除结构文件
 在文件名处使用星号 §7*§r 时删除整个文件夹，§c谨慎操作！§r
-§7!!struct paste <folder> <name> (-d:<N|10M|1H|1D|1W|2W|1M|6M|1Y>)§r -将结构文件上传到pastebin
-使用 §7<-d>§r 设置保存时长
+
+§7!!struct paste <folder> <name> (-d:<N|10M|1H|1D|1W|2W|1M|6M|1Y>)§r -将结构文件以base64编码上传到pastebin
+采用base64编码，下载时记得使用 §7-b64§r
+使用 §7<-d>§r 设置保存时长；不使用 §7<-d>§r 时默认无限保存
 冒号后分别是：无限、十天、一小时、一天、一周、两周、一个月、两个月和一年
-不使用 §7<-d>§r 时默认无限保存
 ------------'''
 
 def onServerInfo(server, info):
@@ -130,6 +133,17 @@ def delStruct(server, player, foldername, filename, do_reload=True):
             server.say(l)
         server.tell(player, '§cfailed to delete§r§7 '+foldername+':'+filename+'§r')
 
+parse_time={
+'N':'a really long time',
+'10M':'10 minutes',
+'1H':'1 hour',
+'1D':'1 day',
+'1W':'1 week',
+'2W':'2 weeks',
+'1M':'1 month',
+'6M':'6 months',
+'1Y':'a year'}
+
 def pasteStruct(server, player, foldername, filename, expire_date='N'):
     filepath = 'server/world/generated/'+foldername+'/structures/'+filename+'.nbt' #检验文件
     if not os.path.exists(filepath):
@@ -155,4 +169,4 @@ def pasteStruct(server, player, foldername, filename, expire_date='N'):
         response.close()
     response_url = response_url.split('/')
     response_url = 'https://pastebin.com/raw/'+response_url[len(response_url)-1]
-    server.execute('tellraw @a ['+'{"text": "§a'+foldername+':'+filename+'§r is uploaded to §7'+response_url+'§r for §a'+expire_date+'§r\\nclick "}, '+'{"text": "§nhere§r", "clickEvent": {"action": "suggest_command", "value": "'+response_url+'"}}, '+'{"text": " and copy to use otherwhere"}]')
+    server.execute('tellraw @a ['+'{"text": "§a'+foldername+':'+filename+'§r is uploaded to §7'+response_url+'§r for §a'+parse_time[expire_date]+'§r\\nclick "}, '+'{"text": "§nhere§r", "clickEvent": {"action": "suggest_command", "value": "'+response_url+'"}}, '+'{"text": " and copy to use otherwhere"}]')
