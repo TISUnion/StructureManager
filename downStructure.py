@@ -47,7 +47,7 @@ def onServerInfo(server, info):
                     args.append(['-d','N'])
                 else:
                     args[4] = args[4].split(':')
-                pasteStruct(server, player, args[2], args[3], args[4][1])
+                pasteStruct(server, info.player, args[2], args[3], args[4][1])
             elif re.match('^!!struct get [a-z-_0-9]+ [a-z-_0-9]+ \S+( -o)?( -b64)?( -o)?$', info.content):
                 args = info.content.split(' ')
                 can_overwrite = info.content.find(' -o') > -1
