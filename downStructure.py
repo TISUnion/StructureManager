@@ -24,12 +24,14 @@ def onServerInfo(server, info):
             if info.content == '!!structget':
                 for line in helpmsg.splitlines():
                     server.tell(info.player, line)
-            elif re.match('^!!structget -l( [\w-]+)?$', info.content):
+            elif re.match('^!!structget -l(:\d+)?( [\w-]+)?$', info.content):
                 args = info.content.split(' ')
-                if len(args) == 3:
-                    listStruct(server, info.player, args[2])
-                else:
-                    listStruct(server, info.player)
+                args[1] = args[1].split(':')
+                if len(args) == 2:
+                    args.append('')
+                if len(args[1]) == 1:
+                    args[1].append('1')
+                listStruct(server, info.player, int(args[1][1]), args[2])
             elif re.match('^!!structget -d [\w-]+ [\w\*-]+$', info.content):
                 args = info.content.split(' ')
                 delStruct(server, info.player, args[2], args[3])
@@ -71,16 +73,18 @@ def getStruct(server, foldername, filename, url, is_b64mode, can_overwrite, do_r
             server.say(l)
         server.say('§cfailed to download§r')
 
-def listStruct(server, player, kwrd=''):
-    counter = 0
+def listStruct(server, player, page, kwrd=''):
+    counter = 1
+    start = (page-1)*20
+    end = page*20
     for i in os.listdir('server/world/generated/'):
         for j in os.listdir('server/world/generated/'+i+'/structures'):
             strout = i+':'+j
             if strout.find(kwrd) > -1:
-                server.tell(player, '§a'+strout[0:len(strout)-4]+'§r')
-
+                if counter > start:
+                    server.tell(player, '§a'+strout[0:len(strout)-4]+'§r')
                 counter += 1
-                if counter > 20:
+                if counter > end:
                     return
 
 def delStruct(server, player, foldername, filename, do_reload=True):
