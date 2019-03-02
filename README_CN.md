@@ -1,4 +1,4 @@
-# DownStructure
+# StructureManager
 下载并管理结构文件
 ### 本程序遵循以下协议 [GPL-3.0 License](https://github.com/TISUnion/DownStructure/blob/master/LICENSE)
 ---
