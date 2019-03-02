@@ -1,4 +1,4 @@
-# DownStructure
+# StructureManager
 download a structure to server and manage structures
 
 [中文文档](./README_CN.md)
