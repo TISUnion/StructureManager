@@ -33,7 +33,7 @@ def onServerInfo(server, info):
             if info.content == '!!struct':
                 for line in helpmsg.splitlines():
                     server.tell(info.player, line)
-            elif re.match('^!!struct list(:\d+)?( [0-9a-z\*\._-/]+)?$', info.content):
+            elif re.match('^!!struct list(:\d+)?( [0-9a-z\*\.\-_/]+)?$', info.content):
                 args = info.content.split(' ')
                 args[1] = args[1].split(':')
                 if len(args) == 2:
@@ -41,17 +41,17 @@ def onServerInfo(server, info):
                 if len(args[1]) == 1:
                     args[1].append('1')
                 listStruct(server, info.player, int(args[1][1]), args[2])
-            elif re.match('^!!struct del [0-9a-z\*\._-/]+ [0-9a-z\*\._-/]+$', info.content):
+            elif re.match('^!!struct del [0-9a-z\*\.\-_/]+ [0-9a-z\*\.\-_/]+$', info.content):
                 args = info.content.split(' ')
                 delStruct(server, info.player, args[2], args[3])
-            elif re.match('^!!struct paste [0-9a-z\*\._-/]+ [0-9a-z\*\._-/]+( -d:((N)|(10M)|(1H)|(1D)|(1W)|(2W)|(1M)|(6M)|(1Y)))?$', info.content):
+            elif re.match('^!!struct paste [0-9a-z\*\.\-_/]+ [0-9a-z\*\.\-_/]+( -d:((N)|(10M)|(1H)|(1D)|(1W)|(2W)|(1M)|(6M)|(1Y)))?$', info.content):
                 args = info.content.split(' ')
                 if len(args) == 4:
                     args.append(['-d','N'])
                 else:
                     args[4] = args[4].split(':')
                 pasteStruct(server, info.player, args[2], args[3], args[4][1])
-            elif re.match('^!!struct get [0-9a-z\*\._-/]+ [0-9a-z\*\._-/]+ \S+( -o)?( -b64)?( -o)?$', info.content):
+            elif re.match('^!!struct get [0-9a-z\*\.\-_/]+ [0-9a-z\*\.\-_/]+ \S+( -o)?( -b64)?( -o)?$', info.content):
                 args = info.content.split(' ')
                 can_overwrite = info.content.find(' -o') > -1
                 is_b64mode = info.content.find(' -b64') > -1
