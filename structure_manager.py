@@ -75,7 +75,7 @@ def getStruct(server, foldername, filename, url, is_b64mode, can_overwrite, do_r
         data = urllib2.urlopen(url).read()
         with open('server/world/generated/'+foldername+'/structures/'+filename+'.nbt','wb') as nbtfile:
             if is_b64mode:
-                nbtfile.write(base64.b64decode(data))
+                nbtfile.write(base64.b64decode(data.replace('data:application/octet-stream;base64,','')))
                 server.say('§a'+foldername+':'+filename+'§r has been downloaded and decoded successfully')
             else:
                 nbtfile.write(data)
