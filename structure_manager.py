@@ -33,7 +33,7 @@ def onServerInfo(server, info):
             if info.content == '!!struct':
                 for line in helpmsg.splitlines():
                     server.tell(info.player, line)
-            elif re.match('^!!struct list(:\d+)?( [0-9a-z\*\.\-_/]+)?$', info.content):
+            elif re.match('^!!struct list(:\d+)?( [0-9a-z\*\.\-_/:]+)?$', info.content):
                 args = info.content.split(' ')
                 args[1] = args[1].split(':')
                 if len(args) == 2:
