@@ -2,9 +2,14 @@
 import os
 import re
 import base64
+try:
+    import urllib2
+except ModuleNotFoundError:
+    import urllib.request as urllib2
+import time
 import urllib
-import urllib2
 import traceback
+import copy
 
 helpmsg ='''------------
 §7!!struct get <folder> <name> <url> (-o) (-b64)§r -下载结构文件到本地的文件夹中
@@ -170,3 +175,8 @@ def pasteStruct(server, player, foldername, filename, expire_date='N'):
     response_url = response_url.split('/')
     response_url = 'https://pastebin.com/raw/'+response_url[len(response_url)-1]
     server.execute('tellraw @a ['+'{"text": "§a'+foldername+':'+filename+'§r is uploaded to §7'+response_url+'§r for §a'+parse_time[expire_date]+'§r\\nclick "}, '+'{"text": "§nhere§r", "clickEvent": {"action": "suggest_command", "value": "'+response_url+'"}}, '+'{"text": " and copy to use otherwhere"}]')
+
+def on_info(server, info):
+    info2 = copy.deepcopy(info)
+    info2.isPlayer = info2.is_player
+    onServerInfo(server, info2)
